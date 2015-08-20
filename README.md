@@ -3,8 +3,15 @@
 
 用于家庭个人的记账
 
-jdk1.7
-springframework3.2.14.RELEASE
-spring-mvc
-spring-jdbc
-bootstrap-3.3.5-dist
+功能：
+日记账增删改查
+
+jdk1.7</br>
+springframework3.2.14.RELEASE</br>
+spring-mvc</br>
+spring-jdbc</br>
+--</br>
+bootstrap-3.3.5-dist</br>
+DataTables-1.10.7</br>
+datetimepicker</br>
+jquery-validate</br>
