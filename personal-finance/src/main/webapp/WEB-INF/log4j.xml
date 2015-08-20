@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+
+    <!--console-->
+    <appender name="Console" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- operation file-->
+    <appender name="operationAppender" class="org.apache.log4j.FileAppender">
+        <param name="Append" value="true"/>
+        <param name="File" value="../logs/heart_beat-operation.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+    </appender>
+
+    <!--scheduler file appender-->
+    <appender name="schedulerAppender" class="org.apache.log4j.FileAppender">
+        <param name="Append" value="true"/>
+        <param name="File" value="../logs/heart_beat-scheduler.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+    </appender>
+
+    <!--&lt;!&ndash;action daily&ndash;&gt;-->
+    <!--<appender name="actionDaily" class="org.apache.log4j.DailyRollingFileAppender">-->
+    <!--<param name="File" value="../logs/ad-action.log"/>-->
+    <!--<param name="Append" value="true"/>-->
+    <!--<param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>-->
+    <!--<layout class="org.apache.log4j.PatternLayout">-->
+    <!--<param name="ConversionPattern" value="%d %p [%c] - %m%n"/>-->
+    <!--</layout>-->
+    <!--</appender>-->
+
+    <!--&lt;!&ndash;mail daily&ndash;&gt;-->
+    <!--<appender name="mailDaily" class="org.apache.log4j.DailyRollingFileAppender">-->
+    <!--<param name="File" value="../logs/ad-mail.log"/>-->
+    <!--<param name="Append" value="true"/>-->
+    <!--<param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>-->
+    <!--<layout class="org.apache.log4j.PatternLayout">-->
+    <!--<param name="ConversionPattern" value="%d %p [%c] - %m%n"/>-->
+    <!--</layout>-->
+    <!--</appender>-->
+
+
+    <root>
+        <level value="DEBUG"/>
+        <appender-ref ref="Console"/>
+    </root>
+
+    <!--Operation logger -->
+    <logger name="com.andaily.service.operation" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="operationAppender"/>
+    </logger>
+    <logger name="com.andaily.domain" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="operationAppender"/>
+    </logger>
+
+    <!--spring logger-->
+    <logger name="org.springframework" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="Console"/>
+    </logger>
+
+
+    <!--&lt;!&ndash;action logger &ndash;&gt;-->
+    <!--<logger name="com.andaily.domain.developer" additivity="false">-->
+    <!--<level value="DEBUG"/>-->
+    <!--<appender-ref ref="actionDaily"/>-->
+    <!--</logger>-->
+
+    <!--Configuration your logger -->
+    <!--<logger name="com.andaily.service.impl" additivity="false">-->
+    <!--<level value="INFO"/>-->
+    <!--<appender-ref ref="File"/>-->
+    <!--</logger>-->
+
+
+</log4j:configuration>
