@@ -9,6 +9,8 @@ import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,7 @@ import com.fusheng.personal.finance.util.TransUtil;
 
 @Controller
 public class TradeRecordController {
+	private final static Logger log = LoggerFactory.getLogger(TradeRecordController.class);
 	@Autowired
 	private TradeRecordDao tradeRecordDao;
 	@Autowired
@@ -72,7 +75,24 @@ public class TradeRecordController {
 		ModelAndView modelAndView = new ModelAndView("trade_main");  
         modelAndView.addObject("tradeModel", tradeRecordDao.getTradeRecordById(tradeRecord.getId()));
         modelAndView.addObject("catagoryList", tradeRecordDao.getTransWordListByCatagory(TransUtil.TYPE_CATAGORY));
-        return modelAndView; 
+        return modelAndView;
+	}
+	@RequestMapping(value = "/getEchartsBarByMon.do")
+	public void getEchartsBarByMon(HttpServletResponse response) {
+		String jsonStr = tradeRecordDao.getEchartsBarByMon();
+		log.debug("echars getEchartsBarbyMon options-->" + jsonStr);
+		JSONObject json = new JSONObject();
+		json.put("options", jsonStr);
+		writeJson(response, json);
+	}
+	
+	@RequestMapping(value = "/getEchartsPieByType.do")
+	public void getEchartsPieByType(HttpServletResponse response) {
+		String jsonStr = tradeRecordDao.getEchartsPieByType();
+		log.debug("echars getEchartsPieByType options-->" + jsonStr);
+		JSONObject json = new JSONObject();
+		json.put("options", jsonStr);
+		writeJson(response, json);
 	}
 	
 	public static void writeJson(HttpServletResponse response, JSON json) {

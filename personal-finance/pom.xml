@@ -32,6 +32,11 @@
 			<version>2.4</version>
 			<classifier>jdk15</classifier>
 		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.2</version>
+		</dependency>
 		<!-- provided dependency -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -94,6 +99,12 @@
 			<artifactId>standard</artifactId>
 			<version>1.1.2</version>
 			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.abel533</groupId>
+			<artifactId>ECharts</artifactId>
+			<version>2.2.6</version>
 		</dependency>
 	</dependencies>
 	<build>
