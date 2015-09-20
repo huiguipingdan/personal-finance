@@ -19,6 +19,11 @@ public class CommonUtil {
 		}
 		return array.toArray(new String[6]);
 	}
+	
+	public static String getCurrentMon() {
+		return DateFormatUtils.format(new Date(), "yyyyMM");
+	}
+	
 	public static List<Map<String, Object>> fillDefaultZero4EchartsList(List<Map<String, Object>> list, String[] nameCatagory) {
 		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
 		for(String name : nameCatagory) {

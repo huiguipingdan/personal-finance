@@ -14,16 +14,7 @@
     <!-- operation file-->
     <appender name="operationAppender" class="org.apache.log4j.FileAppender">
         <param name="Append" value="true"/>
-        <param name="File" value="../logs/heart_beat-operation.log"/>
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
-        </layout>
-    </appender>
-
-    <!--scheduler file appender-->
-    <appender name="schedulerAppender" class="org.apache.log4j.FileAppender">
-        <param name="Append" value="true"/>
-        <param name="File" value="../logs/heart_beat-scheduler.log"/>
+        <param name="File" value="../logs/person-finance.log"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
         </layout>
@@ -56,11 +47,11 @@
     </root>
 
     <!--Operation logger -->
-    <logger name="com.andaily.service.operation" additivity="false">
+    <logger name="com.fusheng" additivity="false">
         <level value="DEBUG"/>
         <appender-ref ref="operationAppender"/>
     </logger>
-    <logger name="com.andaily.domain" additivity="false">
+    <logger name="com.fusheng" additivity="false">
         <level value="DEBUG"/>
         <appender-ref ref="operationAppender"/>
     </logger>

@@ -125,7 +125,8 @@ public class TradeRecordDao {
 	}
 	public List<Map<String, Object>> getCurrentMonPayByType() {
 		String sql = "select p.enum_value as name,sum(t.amt) as value from pf_enum p left join trade_record t "
-						+"on p.enum_key=t.catagory where p.enum_catagory='catagory' group by t.catagory order by enum_key";
+						+"on p.enum_key=t.catagory where p.enum_catagory='catagory' and DATE_FORMAT(t.update_time,'%Y%m')='"
+						+CommonUtil.getCurrentMon()+"' group by t.catagory order by enum_key";
 		return jdbcTemplate.queryForList(sql);
 	}
 	/**
