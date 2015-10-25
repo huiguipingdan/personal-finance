@@ -6,7 +6,10 @@ function initRecordList() {
 		"processing": true,
 	    "serverSide": true,
 		"order": [[ 4, "desc" ]],
-		"ajax" : "getList.do",
+		"ajax": {
+	        url: 'getList.do',
+	        type: 'POST'
+	    },
 		"columns": [
 		            { "data": "reason" },
 		            { "data": "amtFlag",

@@ -41,7 +41,7 @@ public class TransUtil {
 		return !(StringUtils.isBlank(catagoryType) || StringUtils.isBlank(enumKey)); 
 	}
 	private boolean isResultEnum(String catagoryType, String enumKey, TransEnum e) {
-		log.debug(catagoryType+"-"+enumKey+"|currentEnum->"+e.getEnumCatagory()+"-"+e.getEnumKey());
+		//log.debug(catagoryType+"-"+enumKey+"|currentEnum->"+e.getEnumCatagory()+"-"+e.getEnumKey());
 		return (catagoryType.equals(e.getEnumCatagory()) && Integer.valueOf(enumKey)==(e.getEnumKey()));
 	}
 }

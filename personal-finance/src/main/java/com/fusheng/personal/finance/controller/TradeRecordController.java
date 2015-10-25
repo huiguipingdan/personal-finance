@@ -41,13 +41,7 @@ public class TradeRecordController {
 		int jqStart = Integer.parseInt(request.getParameter("start"));
 		int jqDraw = Integer.parseInt(request.getParameter("draw"));
 		int jqLength = Integer.parseInt(request.getParameter("length"));
-		String searchValue="";
-		try {
-			//request 默认使用ISO-8859-1编码
-			searchValue = new String(request.getParameter("search[value]").getBytes("ISO-8859-1"));
-		} catch (UnsupportedEncodingException e) {
-			log.error(e.getMessage(), e);
-		};
+		String searchValue=request.getParameter("search[value]");
 		String orderColumn = request.getParameter("order[0][column]");
 		String orderName = request.getParameter("columns["+orderColumn+"][data]"); 
 		String orderDir = request.getParameter("order[0][dir]");

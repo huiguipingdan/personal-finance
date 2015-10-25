@@ -34,6 +34,7 @@
     <script src="${contextPath}/resources/personal-finance.js"></script>
     <link rel="stylesheet" type="text/css" href="${contextPath}/resources/personal-finance.css">
 </head>
+<%request.setCharacterEncoding("UTF-8"); %>
 <body>
 	<script>
 		$(document).ready(function() {
