@@ -49,16 +49,12 @@
     <!--Operation logger -->
     <logger name="com.fusheng" additivity="false">
         <level value="DEBUG"/>
-        <appender-ref ref="operationAppender"/>
-    </logger>
-    <logger name="com.fusheng" additivity="false">
-        <level value="DEBUG"/>
-        <appender-ref ref="operationAppender"/>
+        <appender-ref ref="Console"/>
     </logger>
 
     <!--spring logger-->
     <logger name="org.springframework" additivity="false">
-        <level value="DEBUG"/>
+        <level value="ERROR"/>
         <appender-ref ref="Console"/>
     </logger>
 

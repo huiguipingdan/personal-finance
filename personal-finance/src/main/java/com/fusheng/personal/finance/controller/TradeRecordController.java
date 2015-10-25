@@ -2,7 +2,11 @@ package com.fusheng.personal.finance.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSON;
@@ -30,10 +34,29 @@ public class TradeRecordController {
 	private TransUtil transUtil;
 	TradeRecord tradeRecord;
 	@RequestMapping("/getList.do")
-	public void getTradeRecordList(HttpServletResponse response) {
+	public void getTradeRecordList(HttpServletResponse response,HttpServletRequest request) {
 		JSONObject jsonObj = new JSONObject();
-		JSONArray jsonArray = JSONArray.fromObject(tradeRecordDao.getTradeRecordList());
+		// request前台的参数含义
+		// http://datatables.net/manual/server-side
+		int jqStart = Integer.parseInt(request.getParameter("start"));
+		int jqDraw = Integer.parseInt(request.getParameter("draw"));
+		int jqLength = Integer.parseInt(request.getParameter("length"));
+		String searchValue="";
+		try {
+			//request 默认使用ISO-8859-1编码
+			searchValue = new String(request.getParameter("search[value]").getBytes("ISO-8859-1"));
+		} catch (UnsupportedEncodingException e) {
+			log.error(e.getMessage(), e);
+		};
+		String orderColumn = request.getParameter("order[0][column]");
+		String orderName = request.getParameter("columns["+orderColumn+"][data]"); 
+		String orderDir = request.getParameter("order[0][dir]");
+		List<TradeRecord> resultList = tradeRecordDao.getTradeRecordList(jqStart, jqLength, orderName, orderDir, searchValue);
+		JSONArray jsonArray = JSONArray.fromObject(resultList);
 		jsonObj.put("data", jsonArray);
+		jsonObj.put("recordsTotal", tradeRecordDao.getTradeRecordListTotalCount(""));
+		jsonObj.put("draw", jqDraw);
+		jsonObj.put("recordsFiltered", tradeRecordDao.getTradeRecordListTotalCount(searchValue));
 		writeJson(response,jsonObj);
 	}
 	@RequestMapping(value = "/getTransWord.do")

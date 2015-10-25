@@ -3,6 +3,8 @@ function initRecordList() {
 		language: {
 			url: 'resources/DataTables-1.10.7/media/i18n/chinese.json'
 		},
+		"processing": true,
+	    "serverSide": true,
 		"order": [[ 4, "desc" ]],
 		"ajax" : "getList.do",
 		"columns": [

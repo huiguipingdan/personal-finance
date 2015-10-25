@@ -9,6 +9,8 @@ import javax.annotation.Resource;
 import net.sf.json.JSONArray;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedBeanPropertyRowMapper;
@@ -38,10 +40,29 @@ import com.github.abel533.echarts.style.ItemStyle;
 public class TradeRecordDao {
 	@Resource(name = "jdbcTemplate")
 	private JdbcTemplate jdbcTemplate;
+	private final static Logger log = LoggerFactory.getLogger(TradeRecordDao.class);
 	
-	public List<TradeRecord> getTradeRecordList() {
-		String sql = "select id as id,reason as reason,catagory as catagory,amt_flag as amtFlag,amt as amt,date_format(update_time,'%Y-%m-%d') as updateTime from trade_record order by update_time desc";
-		return (List<TradeRecord>)jdbcTemplate.query(sql, new BeanPropertyRowMapper(TradeRecord.class));
+	public List<TradeRecord> getTradeRecordList(int start, int length, String orderColName, String orderDir, String searchValue) {
+		String sql = "select t.id as id,t.reason as reason,t.catagory as catagory,t.amt_flag as amtFlag,"
+				+"t.amt as amt,date_format(t.update_time,'%Y-%m-%d') as updateTime "
+				+"from trade_record t left join pf_enum p on t.catagory=p.enum_key and p.enum_catagory='catagory' where 1=1";
+		StringBuilder sqlBuilder = new StringBuilder(sql);
+		if(StringUtils.isNotBlank(searchValue)) {
+			sqlBuilder.append(" and reason like '%"+searchValue+"%' or date_format(update_time,'%Y-%m-%d') like '%"
+					+searchValue+"%' or p.enum_value like '%"+searchValue+"%'");
+		}
+		sqlBuilder.append(" order by "+orderColName+" "+orderDir+" limit "+start+","+(start+length));
+		log.debug("getTradeRecordList page sql-->"+sqlBuilder);
+		return (List<TradeRecord>)jdbcTemplate.query(sqlBuilder.toString(), new BeanPropertyRowMapper(TradeRecord.class));
+	}
+	public int getTradeRecordListTotalCount(String searchValue) {
+		StringBuilder sqlBuilder = new StringBuilder();
+		sqlBuilder.append("select count(t.id) from trade_record t left join pf_enum p on t.catagory=p.enum_key and p.enum_catagory='catagory' where 1=1");
+		if(StringUtils.isNotBlank(searchValue)) {
+			sqlBuilder.append(" and reason like '%"+searchValue+"%' or date_format(update_time,'%Y-%m-%d') like '%"
+					+searchValue+"%' or p.enum_value like '%"+searchValue+"%'");
+		}
+		return jdbcTemplate.queryForInt(sqlBuilder.toString());
 	}
 	public int saveTradeRecord(TradeRecord tradeRecord) {
 		String sql = "INSERT INTO trade_record  ( reason ,  catagory ,"
